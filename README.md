@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+# Nota
+
+para correr la app en modo debug debe poner su api key de the movie db
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
