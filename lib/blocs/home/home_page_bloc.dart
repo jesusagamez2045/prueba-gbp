@@ -38,24 +38,29 @@ class HomePageBloc {
 
   void _mapEventToState(HomePageEvent event) async{
     if(event is GetInitialInformation){
-      _getTopRated();
-      _getRecommended();
+      _getTopRated("");
+      _getRecommended("");
     }
   }
 
-  void _getTopRated() async {
-    final movies = await _tmdbApi.getTopRated();
+  void _getTopRated(String query) async {
+    final movies = await _tmdbApi.getTopRated(query);
     _inTopRated.add(movies);
   }
 
-  void _getRecommended() async {
-    final movies = await _tmdbApi.getRecommended();
+  void _getRecommended(String query) async {
+    final movies = await _tmdbApi.getRecommended(query);
     _inTopRecommended.add(movies);
   }
 
   void getActors(int id) async {
     final actors = await _tmdbApi.getActors(id);
     _actors.add(actors);
+  }
+
+  void searchMovie(String query){
+    _getTopRated(query);
+    _getRecommended(query);
   }
 
 

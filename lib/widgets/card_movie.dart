@@ -35,8 +35,10 @@ class CardMovie extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/images/no-image.jpg'),
-                  image: NetworkImage('${Constants.THE_MOVIE_DB_IMG_PATH}/${this.movie.posterPath}'),
                   fit: BoxFit.cover,
+                  image: (this.movie.posterPath != null) 
+                  ? NetworkImage('${Constants.THE_MOVIE_DB_IMG_PATH}/${this.movie.posterPath}')
+                  : AssetImage('assets/images/no-image.jpg'),
                 ),
               ),
             ),

@@ -14,45 +14,58 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final _homeBloc = HomePageBloc();
+
+  @override
+  void initState() {
+    _homeBloc.homeEventControllerSink.add(GetInitialInformation());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = new Responsive.of(context);
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Color(0xff5CA0D3),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          children: [
-            SizedBox(
-              height: responsive.hp(10),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: responsive.ip(4)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hello, what do you \n want to watch ?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: responsive.ip(3.5)
-                    ),
-                  ),
-                  SizedBox(
-                    height: responsive.hp(4),
-                  ),
-                  _searchInput()
-                ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        backgroundColor: Color(0xff5CA0D3),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: Column(
+            children: [
+              SizedBox(
+                height: responsive.hp(10),
               ),
-            ),
-            SizedBox(
-              height: responsive.hp(4),
-            ),
-            _Box()
-          ],
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: responsive.ip(4)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hello, what do you \n want to watch ?',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: responsive.ip(3.5)
+                      ),
+                    ),
+                    SizedBox(
+                      height: responsive.hp(4),
+                    ),
+                    _searchInput()
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: responsive.hp(4),
+              ),
+              _box()
+            ],
+          ),
         ),
       ),
     );
@@ -75,28 +88,12 @@ class _HomePageState extends State<HomePage> {
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
         ),
+        onChanged: _homeBloc.searchMovie,
       ),
     );
   }
-}
 
-
-class _Box extends StatefulWidget {
-  @override
-  __BoxState createState() => __BoxState();
-}
-
-class __BoxState extends State<_Box> {
-  final _homeBloc = HomePageBloc();
-
-  @override
-  void initState() {
-    _homeBloc.homeEventControllerSink.add(GetInitialInformation());
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _box(){
     final Responsive responsive = new Responsive.of(context);
     return Expanded(
       child: Container(
@@ -115,7 +112,6 @@ class __BoxState extends State<_Box> {
           ),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              print(constraints.maxHeight);
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -129,6 +125,7 @@ class __BoxState extends State<_Box> {
       ),
     );
   }
+
 
   Widget _boxRecommended(BoxConstraints constraints, Responsive responsive) {
     return Container(

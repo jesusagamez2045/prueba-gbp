@@ -14,12 +14,18 @@ class TmdbApi {
   );
 
 
-  Future<List<MovieModel>> getTopRated() async{
+  Future<List<MovieModel>> getTopRated(String query) async{
     try {
+      var url = "/movie/top_rated";
+      if(query.trim().length > 0){
+        url = "/search/movie";
+      }
+
       final resp = await this._dio.get(
-        '/movie/top_rated',
+        '$url',
         queryParameters: {
-          "api_key" : Constants.THE_MOVIE_DB_API_KEY
+          "api_key" : Constants.THE_MOVIE_DB_API_KEY,
+          "query" : query
         }
       );
 
@@ -34,12 +40,19 @@ class TmdbApi {
     }
   }
 
-  Future<List<MovieModel>> getRecommended() async{
+  Future<List<MovieModel>> getRecommended(String query) async{
     try {
+
+      var url = "/movie/popular";
+      if(query.trim().length > 0){
+        url = "/search/movie";
+      }
+
       final resp = await this._dio.get(
-        '/movie/popular',
+        '$url',
         queryParameters: {
-          "api_key" : Constants.THE_MOVIE_DB_API_KEY
+          "api_key" : Constants.THE_MOVIE_DB_API_KEY,
+          "query" : query
         }
       );
 
